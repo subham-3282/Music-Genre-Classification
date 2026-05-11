@@ -144,7 +144,12 @@ div[data-testid="stFileUploader"] > div { border: none !important; }
 # ─── Model Loading ───
 @st.cache_resource
 def load_model():
-    model_path = os.path.join(os.path.dirname(__file__), 'music_genre_classification_model.h5')
+    model_path = "music_genre_classification_model.h5"
+
+    if not os.path.exists(model_path):
+        st.error(f"Model file not found: {model_path}")
+        st.stop()
+
     return tf.keras.models.load_model(model_path)
 
 # ─── Audio Preprocessing ───
